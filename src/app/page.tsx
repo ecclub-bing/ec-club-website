@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, CalendarDays, Users, Lightbulb, BarChart } from "lucide-react";
+import { ArrowRight, Users, Lightbulb, BarChart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -63,14 +63,14 @@ export default function Home() {
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent" />
-        <div className="relative z-10 flex flex-col items-center gap-6 p-4 animate-fade-in-up">
-          <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tight text-shadow-lg">
+        <div className="relative z-10 flex flex-col items-center gap-6 p-4 animate-fade-in-up animation-delay-300">
+          <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tight text-shadow-lg animate-fade-in-up animation-delay-500">
             Entrepreneur Connect
           </h1>
-          <p className="max-w-3xl text-lg md:text-xl text-neutral-200">
+          <p className="max-w-3xl text-lg md:text-xl text-neutral-200 animate-fade-in-up animation-delay-700">
             Uniting Binghamton's brightest minds to foster innovation and build the future of student-led enterprise.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 mt-4">
+          <div className="flex flex-col sm:flex-row gap-4 mt-4 animate-fade-in-up animation-delay-900">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg">
               <Link href="/events">Explore Events</Link>
             </Button>
@@ -85,21 +85,21 @@ export default function Home() {
       <section className="py-20 bg-secondary/20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="flex flex-col items-center gap-4 p-6 rounded-lg">
+            <div className="flex flex-col items-center gap-4 p-6 rounded-lg animate-fade-in-up animation-delay-300">
               <div className="bg-primary text-primary-foreground rounded-full p-4">
                 <Users className="h-8 w-8" />
               </div>
               <h3 className="font-headline text-xl font-semibold">Community</h3>
               <p className="text-muted-foreground">Connect with a diverse network of student entrepreneurs and industry mentors.</p>
             </div>
-            <div className="flex flex-col items-center gap-4 p-6 rounded-lg">
+            <div className="flex flex-col items-center gap-4 p-6 rounded-lg animate-fade-in-up animation-delay-500">
               <div className="bg-primary text-primary-foreground rounded-full p-4">
                 <Lightbulb className="h-8 w-8" />
               </div>
               <h3 className="font-headline text-xl font-semibold">Resources</h3>
               <p className="text-muted-foreground">Access workshops, funding opportunities, and essential tools for your startup.</p>
             </div>
-            <div className="flex flex-col items-center gap-4 p-6 rounded-lg">
+            <div className="flex flex-col items-center gap-4 p-6 rounded-lg animate-fade-in-up animation-delay-700">
               <div className="bg-primary text-primary-foreground rounded-full p-4">
                 <BarChart className="h-8 w-8" />
               </div>
@@ -114,13 +114,13 @@ export default function Home() {
       {/* Articles Section */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="font-headline text-4xl font-bold">Latest Insights</h2>
             <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">Explore stories, tips, and news from our entrepreneurial community.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {articles.map((article, index) => (
-              <Card key={index} className="overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border-transparent hover:border-primary">
+              <Card key={index} className="overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border-transparent hover:border-primary animate-fade-in-up" style={{animationDelay: `${index * 200}ms`}}>
                 <CardContent className="p-0">
                   <div className="relative h-56 w-full">
                     <Image
@@ -149,7 +149,7 @@ export default function Home() {
       <section className="py-20 md:py-28 bg-secondary/20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 animate-fade-in-up">
               <h2 className="font-headline text-4xl font-bold">Upcoming Events</h2>
               <p className="mt-4 text-muted-foreground text-lg">Stay updated with our latest workshops, talks, and networking sessions.</p>
               <Button asChild size="lg" className="mt-6 group transition-all duration-300 ease-in-out bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg">
@@ -161,7 +161,7 @@ export default function Home() {
             <div className="lg:col-span-1">
                 <div className="flex flex-col gap-6">
                     {events.map((event, index) => (
-                        <Link href={event.link} key={index} className="block bg-background p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-l-4 border-primary">
+                        <Link href={event.link} key={index} className="block bg-background p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-l-4 border-primary animate-fade-in-up" style={{animationDelay: `${index * 200}ms`}}>
                             <div className="flex items-center gap-6">
                                 <div className="flex flex-col items-center justify-center text-primary w-16">
                                     <span className="font-headline font-bold text-2xl">{event.date}</span>
