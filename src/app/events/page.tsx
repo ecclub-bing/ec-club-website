@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CalendarDays, MapPin } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-const events = [
+const upcomingEvents = [
     {
-        date: "Fri, Oct 25",
+        date: "25",
+        month: "Oct",
         time: "5:00 PM",
         title: "Koffman Incubator Tour",
         location: "Koffman Southern Tier Incubator",
@@ -13,7 +14,8 @@ const events = [
         link: "#",
     },
     {
-        date: "Fri, Oct 18",
+        date: "18",
+        month: "Oct",
         time: "7:00 PM",
         title: "GBM#3: KLAWS Speaker Event",
         location: "Lecture Hall 10",
@@ -21,57 +23,120 @@ const events = [
         link: "#",
     },
     {
-        date: "Fri, Oct 4",
+        date: "04",
+        month: "Oct",
         time: "6:30 PM",
         title: "Networking Night & Social",
         location: "University Union, Room 120",
         description: "Connect with fellow entrepreneurs, professionals, and alumni in a relaxed social setting.",
         link: "#",
     },
+];
+
+const pastEvents = [
     {
-        date: "Fri, Sep 20",
-        time: "7:00 PM",
+        date: "20",
+        month: "Sep",
+        year: "2024",
         title: "GBM#2: Idea Pitch Workshop",
-        location: "Fine Arts Building, Room 258",
-        description: "Learn how to craft and deliver a compelling pitch for your business idea.",
+        description: "Learned how to craft and deliver a compelling pitch for a business idea.",
         link: "#",
     },
-];
+    {
+        date: "06",
+        month: "Sep",
+        year: "2024",
+        title: "Welcome Back GIM",
+        description: "Kicked off the semester with our first General Interest Meeting.",
+        link: "#",
+    },
+    {
+        date: "28",
+        month: "Apr",
+        year: "2024",
+        title: "End of Year Showcase",
+        description: "Members presented their semester-long projects to a panel of judges.",
+        link: "#",
+    }
+]
 
 export default function EventsPage() {
   return (
-    <div className="bg-background">
+    <div className="bg-background text-foreground">
       <div className="container mx-auto px-4 py-16 sm:py-24">
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl font-headline">
-            Club <span className="text-primary">Events</span>
+        <div className="text-center mb-20">
+          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl font-headline">
+            Upcoming <span className="text-primary">Events</span>
           </h1>
           <p className="mt-3 max-w-md mx-auto text-base text-muted-foreground sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
             Join our workshops, speaker sessions, and networking events to accelerate your entrepreneurial journey.
           </p>
         </div>
 
-        <div className="mt-16 max-w-4xl mx-auto">
-            <div className="flex flex-col gap-8">
-                {events.map((event, index) => (
-                    <Card key={index} className="transition-shadow duration-300 hover:shadow-lg">
-                        <CardHeader>
-                            <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                                <CardTitle className="font-headline text-2xl">{event.title}</CardTitle>
-                                <div className="flex items-center gap-2 text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
-                                    <CalendarDays className="h-4 w-4" />
-                                    <span>{event.date} @ {event.time}</span>
+        {/* Upcoming Events Timeline */}
+        <div className="relative max-w-5xl mx-auto">
+            <div className="absolute left-1/2 h-full w-0.5 bg-border -translate-x-1/2"></div>
+
+            {upcomingEvents.map((event, index) => (
+                <div key={index} className={`mb-12 flex items-center w-full ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
+                    <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
+                        <Card className="group shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out hover:-translate-y-1 border-transparent hover:border-primary/50 relative overflow-hidden">
+                            <CardContent className="p-6 relative z-10">
+                                <div className="absolute top-4 -right-10 transform -rotate-45 bg-primary/10 text-primary font-bold text-sm py-1 px-12 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Featured</div>
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="flex flex-col items-center justify-center bg-primary text-primary-foreground rounded-lg p-3 w-20 h-20">
+                                        <span className="text-3xl font-bold font-headline">{event.date}</span>
+                                        <span className="text-sm font-semibold">{event.month}</span>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-headline text-2xl font-bold">{event.title}</h3>
+                                        <div className="text-muted-foreground font-medium">{event.time}</div>
+                                    </div>
                                 </div>
+                                
+                                <p className="text-muted-foreground mb-4">{event.description}</p>
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+                                    <MapPin className="h-4 w-4" />
+                                    <span>{event.location}</span>
+                                </div>
+                                <Button asChild size="sm" className="group-hover:bg-primary/90 transition-colors">
+                                    <Link href={event.link}>
+                                        Register Now <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                    </Link>
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        {/* Past Events Section */}
+        <div className="mt-32">
+            <div className="text-center mb-16">
+                <h2 className="text-4xl font-extrabold tracking-tight font-headline">
+                    From Our <span className="text-primary/80">Archives</span>
+                </h2>
+                <p className="mt-3 max-w-md mx-auto text-base text-muted-foreground sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                    A look back at some of our memorable past events.
+                </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {pastEvents.map((event, index) => (
+                    <Card key={index} className="flex flex-col bg-card/50 hover:bg-card transition-all duration-300 group shadow-md hover:shadow-xl border">
+                        <CardContent className="p-6 flex flex-col flex-grow">
+                            <div className="flex items-baseline gap-2 mb-2">
+                                <span className="font-headline text-3xl font-bold text-primary/90">{event.date}</span>
+                                <span className="text-lg font-semibold text-muted-foreground">{event.month}</span>
+                                <span className="text-lg text-muted-foreground">{event.year}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground pt-1">
-                                <MapPin className="h-4 w-4" />
-                                <span>{event.location}</span>
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-muted-foreground mb-4">{event.description}</p>
-                            <Button asChild>
-                                <Link href={event.link}>View Details</Link>
+                            <h3 className="font-headline text-xl font-bold mb-3 flex-grow">{event.title}</h3>
+                            <p className="text-muted-foreground text-sm mb-4">{event.description}</p>
+                            <Button asChild variant="link" className="p-0 self-start text-accent-foreground/70 group-hover:text-primary">
+                               <Link href={event.link}>
+                                    Event Recap <ArrowRight className="ml-2 h-4 w-4" />
+                                </Link>
                             </Button>
                         </CardContent>
                     </Card>
