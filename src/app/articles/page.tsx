@@ -13,17 +13,19 @@ import Link from "next/link";
 interface Article {
   id: string;
   title: string;
+  paragraph: string;
   imageUrl: string;
   imageHint: string;
-  createdAt: any;
+  date: string;
+  linkedinUrl: string;
 }
 
 function ArticleCard({ article }: { article: Article }) {
-    const articleDate = article.createdAt?.toDate ? article.createdAt.toDate().toLocaleDateString('en-US', {
+    const articleDate = new Date(article.date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-    }) : 'Date not available';
+    });
 
     return (
         <Card className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 group">
@@ -34,14 +36,15 @@ function ArticleCard({ article }: { article: Article }) {
                         alt={article.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        data-ai-hint={article.imageHint}
+                        data-ai-hint={article.imageHint || 'article image'}
                     />
                 </div>
                 <div className="p-6 flex flex-col">
                     <p className="text-sm text-muted-foreground mb-2">{articleDate}</p>
                     <h3 className="font-headline text-lg font-semibold mb-4 flex-grow">{article.title}</h3>
+                    <p className="text-muted-foreground text-sm mb-4">{article.paragraph}</p>
                     <Button asChild variant="link" className="p-0 font-bold text-accent group-hover:text-primary self-start mt-auto">
-                        <Link href="#">
+                        <Link href={article.linkedinUrl} target="_blank" rel="noopener noreferrer">
                             Read More <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                     </Button>
@@ -75,7 +78,7 @@ export default function ArticlesPage() {
     const fetchArticles = async () => {
       try {
         const articlesCollection = collection(db, "articles");
-        const q = query(articlesCollection, orderBy("createdAt", "desc"));
+        const q = query(articlesCollection, orderBy("date", "desc"));
         const articlesSnapshot = await getDocs(q);
         const articlesList = articlesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Article));
         setArticles(articlesList);
