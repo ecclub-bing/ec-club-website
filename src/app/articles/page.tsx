@@ -25,6 +25,7 @@ function ArticleCard({ article }: { article: Article }) {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
+        timeZone: 'UTC'
     });
 
     return (
@@ -39,11 +40,11 @@ function ArticleCard({ article }: { article: Article }) {
                         data-ai-hint={article.imageHint || 'article image'}
                     />
                 </div>
-                <div className="p-6 flex flex-col">
+                <div className="p-6 flex flex-col h-full">
                     <p className="text-sm text-muted-foreground mb-2">{articleDate}</p>
                     <h3 className="font-headline text-lg font-semibold mb-4 flex-grow">{article.title}</h3>
-                    <p className="text-muted-foreground text-sm mb-4">{article.paragraph}</p>
-                    <Button asChild variant="link" className="p-0 font-bold text-accent group-hover:text-primary self-start mt-auto">
+                    <p className="text-muted-foreground text-sm mb-4 line-clamp-3">{article.paragraph}</p>
+                    <Button asChild variant="link" className="p-0 font-bold self-start mt-auto">
                         <Link href={article.linkedinUrl} target="_blank" rel="noopener noreferrer">
                             Read More <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
@@ -63,6 +64,7 @@ function ArticleSkeleton() {
         <div className="p-6 space-y-4">
           <Skeleton className="h-4 w-1/3" />
           <Skeleton className="h-6 w-full" />
+          <Skeleton className="h-4 w-2/3" />
           <Skeleton className="h-4 w-1/4 mt-4" />
         </div>
       </CardContent>

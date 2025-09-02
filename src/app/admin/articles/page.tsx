@@ -40,6 +40,7 @@ interface Article {
   id: string;
   title: string;
   date: string;
+  linkedinUrl: string;
 }
 
 export default function ManageArticlesPage() {
@@ -136,11 +137,11 @@ export default function ManageArticlesPage() {
                 <TableRow key={article.id}>
                   <TableCell className="font-medium">{article.title}</TableCell>
                   <TableCell>
-                    {new Date(article.date).toLocaleDateString()}
+                    {new Date(article.date).toLocaleDateString('en-US', { timeZone: 'UTC' })}
                   </TableCell>
                   <TableCell className="text-right">
                     <Button variant="ghost" size="icon" asChild>
-                       <Link href={`/articles/${article.id}`} target="_blank">
+                       <Link href={article.linkedinUrl} target="_blank">
                          <Eye className="h-4 w-4" />
                        </Link>
                     </Button>

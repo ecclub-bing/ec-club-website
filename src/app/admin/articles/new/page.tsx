@@ -28,6 +28,7 @@ import {
 import { CalendarIcon, Loader2, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import Image from "next/image";
 
 const formSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters."),
@@ -52,6 +53,7 @@ export default function NewArticlePage() {
       title: "",
       paragraph: "",
       linkedinUrl: "",
+      imageUrl: "",
     },
   });
 
@@ -236,10 +238,12 @@ export default function NewArticlePage() {
                       )}
                       {field.value ? "Change Image" : "Upload Image"}
                     </label>
-                    {field.value && (
+                    {form.getValues("imageUrl") && (
                       <div className="mt-4">
                         <p className="text-sm text-muted-foreground">Image Preview:</p>
-                        <img src={field.value} alt="Preview" className="mt-2 rounded-md max-h-48" />
+                        <div className="relative w-full max-w-sm h-48 mt-2 rounded-md overflow-hidden">
+                           <Image src={form.getValues("imageUrl")} alt="Preview" fill className="object-contain" />
+                        </div>
                       </div>
                     )}
                   </div>

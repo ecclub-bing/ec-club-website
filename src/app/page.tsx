@@ -1,38 +1,25 @@
+
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Users, Lightbulb, BarChart, TrendingUp, Target, Handshake } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const articles = [
-  {
-    image: {
-      src: "https://picsum.photos/600/400?1",
-      hint: "presentation business",
-    },
-    date: "September 25, 2024",
-    title: "Welcome Back: Reflecting on Our Recent GIM Sessions",
-    link: "#",
-  },
-  {
-    image: {
-      src: "https://picsum.photos/600/400?2",
-      hint: "portrait speaker",
-    },
-    date: "April 15, 2024",
-    title: "Having a Great Idea Is Only Brushing the Surface",
-    link: "#",
-  },
-  {
-    image: {
-      src: "https://picsum.photos/600/400?3",
-      hint: "group discussion",
-    },
-    date: "March 1, 2024",
-    title: "The Art of the Pitch: Key Takeaways from our Workshop",
-    link: "#",
-  },
-];
+interface Article {
+  id: string;
+  title: string;
+  paragraph: string;
+  imageUrl: string;
+  imageHint: string;
+  date: string;
+  linkedinUrl: string;
+}
 
 const events = [
     {
@@ -50,6 +37,30 @@ const events = [
 ]
 
 export default function Home() {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [isLoadingArticles, setIsLoadingArticles] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      setIsLoadingArticles(true);
+      try {
+        const articlesCollection = collection(db, "articles");
+        const q = query(articlesCollection, orderBy("date", "desc"), limit(3));
+        const articlesSnapshot = await getDocs(q);
+        const articlesList = articlesSnapshot.docs.map(
+          (doc) => ({ id: doc.id, ...doc.data() } as Article)
+        );
+        setArticles(articlesList);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      } finally {
+        setIsLoadingArticles(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
   return (
     <div className="flex flex-col bg-background overflow-hidden">
       {/* Hero Section */}
@@ -125,28 +136,44 @@ export default function Home() {
             <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">Explore stories, tips, and news from our entrepreneurial community.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {articles.map((article, index) => (
-              <Card key={index} className="overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border-transparent hover:border-primary animate-fade-in-up" style={{animationDelay: `${index * 200}ms`}}>
-                <CardContent className="p-0">
-                  <div className="relative h-56 w-full">
-                    <Image
-                      src={article.image.src}
-                      alt={article.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      data-ai-hint={article.image.hint}
-                    />
-                  </div>
-                  <div className="p-6 flex flex-col">
-                    <p className="text-sm text-muted-foreground mb-2">{article.date}</p>
-                    <h3 className="font-headline text-lg font-semibold mb-4 flex-grow h-16">{article.title}</h3>
-                    <Link href={article.link} className="font-semibold text-primary group-hover:underline self-start mt-auto flex items-center gap-2">
-                        Read More <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {isLoadingArticles ? (
+                Array.from({ length: 3 }).map((_, index) => (
+                    <Card key={index} className="overflow-hidden">
+                        <CardContent className="p-0">
+                            <Skeleton className="h-56 w-full" />
+                            <div className="p-6 space-y-3">
+                                <Skeleton className="h-4 w-1/2" />
+                                <Skeleton className="h-5 w-full" />
+                                <Skeleton className="h-5 w-3/4" />
+                                <Skeleton className="h-4 w-1/4 mt-2" />
+                            </div>
+                        </CardContent>
+                    </Card>
+                ))
+            ) : (
+                articles.map((article, index) => (
+                  <Card key={index} className="overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border-transparent hover:border-primary animate-fade-in-up" style={{animationDelay: `${index * 200}ms`}}>
+                    <CardContent className="p-0">
+                      <div className="relative h-56 w-full">
+                        <Image
+                          src={article.imageUrl}
+                          alt={article.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          data-ai-hint={article.imageHint}
+                        />
+                      </div>
+                      <div className="p-6 flex flex-col">
+                        <p className="text-sm text-muted-foreground mb-2">{new Date(article.date).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                        <h3 className="font-headline text-lg font-semibold mb-4 flex-grow h-16">{article.title}</h3>
+                        <Link href={article.linkedinUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary group-hover:underline self-start mt-auto flex items-center gap-2">
+                            Read More <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+            )}
           </div>
         </div>
       </section>
