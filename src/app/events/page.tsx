@@ -76,9 +76,11 @@ export default function EventsPage() {
         {/* Upcoming Events List */}
         <div className="max-w-4xl mx-auto">
           <div className="relative">
+            {/* The vertical line in the timeline */}
             <div className="absolute left-10 top-0 h-full w-0.5 bg-border -z-10"></div>
             {upcomingEvents.map((event, index) => (
                 <div key={index} className="relative mb-12 pl-10">
+                    {/* The circle on the timeline */}
                     <div className="absolute left-10 top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background"></div>
                     <Card className="group shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out hover:-translate-y-1 border-transparent hover:border-primary/50 relative overflow-hidden">
                         <CardContent className="p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
