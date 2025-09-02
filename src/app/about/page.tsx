@@ -1,5 +1,24 @@
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Linkedin, User } from 'lucide-react';
 import Image from 'next/image';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+
+const eBoardMembers = [
+    { name: 'Amy Wang', role: 'President', imageHint: 'woman portrait' },
+    { name: 'Nick Lagana', role: 'Vice President', imageHint: 'man portrait' },
+    { name: 'Tony Lin', role: 'Treasurer', imageHint: 'man portrait' },
+    { name: 'Justin Chong', role: 'Marketing Director', imageHint: 'man portrait' },
+    { name: 'Brian Ng', role: 'Public Relations Chair', imageHint: 'man portrait' },
+    { name: 'Ingrid Shen', role: 'Secretary', imageHint: 'woman portrait' },
+    { name: 'Kushal Padshala', role: 'Graphic Designer', imageHint: 'man portrait' },
+    { name: 'Jason Moeller', role: 'Education Director', imageHint: 'man portrait' },
+    { name: 'Genesis Li', role: 'Media Director', imageHint: 'woman portrait' },
+    { name: 'Rayaan Lodi', role: 'Editorial Chair', imageHint: 'man portrait' },
+    { name: 'Sebastian Ospina', role: 'Partnership Coordinator', imageHint: 'man portrait' },
+    { name: 'Selina Zhou', role: 'Media Director Intern', imageHint: 'woman portrait' },
+    { name: 'Harrison Lambert', role: 'Treasurer Intern', imageHint: 'man portrait' },
+];
 
 export default function AboutPage() {
   return (
@@ -64,6 +83,47 @@ export default function AboutPage() {
             <p className="mt-12 text-center text-lg text-muted-foreground">
                 Students of any major are welcome to join us!
             </p>
+        </div>
+
+        <div className="mt-24">
+          <div className="text-center">
+            <h2 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl font-headline">
+              Meet Our <span className="text-primary">E-Board</span>
+            </h2>
+            <p className="mt-3 max-w-2xl mx-auto text-lg text-muted-foreground">
+              The dedicated team leading Entrepreneur Connect.
+            </p>
+          </div>
+
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {eBoardMembers.map((member, index) => (
+              <Card key={index} className="group relative text-center overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                <CardContent className="p-0">
+                  <div className="relative w-full h-56 bg-secondary">
+                    <Image
+                      src={`https://picsum.photos/400/400?${index}`}
+                      alt={`Portrait of ${member.name}`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      data-ai-hint={member.imageHint}
+                    />
+                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                     <h3 className="font-headline text-lg font-bold text-white">{member.name}</h3>
+                     <p className="text-primary text-sm font-semibold">{member.role}</p>
+                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Button asChild size="sm" variant="outline" className="bg-transparent text-white border-white hover:bg-white hover:text-black">
+                        <Link href="#">
+                            <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
+                        </Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>
