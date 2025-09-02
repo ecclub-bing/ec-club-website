@@ -73,40 +73,42 @@ export default function EventsPage() {
           </p>
         </div>
 
-        {/* Upcoming Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* Upcoming Events List */}
+        <div className="max-w-4xl mx-auto">
+          <div className="relative">
+            <div className="absolute left-10 top-0 h-full w-0.5 bg-border -z-10"></div>
             {upcomingEvents.map((event, index) => (
-                <Card key={index} className="group shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out hover:-translate-y-1 border-transparent hover:border-primary/50 relative overflow-hidden flex flex-col">
-                    <CardContent className="p-6 relative z-10 flex flex-col flex-grow">
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="flex flex-col items-center justify-center bg-primary text-primary-foreground rounded-lg p-3 w-20 h-20 text-center shrink-0">
-                                <span className="text-3xl font-bold font-headline">{event.date}</span>
-                                <span className="text-sm font-semibold uppercase">{event.month}</span>
+                <div key={index} className="relative mb-12 pl-10">
+                    <div className="absolute left-10 top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background"></div>
+                    <Card className="group shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out hover:-translate-y-1 border-transparent hover:border-primary/50 relative overflow-hidden">
+                        <CardContent className="p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
+                            <div className="flex flex-col items-center justify-center bg-primary text-primary-foreground rounded-lg p-4 w-24 h-24 text-center shrink-0">
+                                <span className="text-4xl font-bold font-headline">{event.date}</span>
+                                <span className="text-md font-semibold uppercase">{event.month}</span>
                             </div>
-                            <div>
-                                <h3 className="font-headline text-xl font-bold leading-tight">{event.title}</h3>
-                                <div className="text-muted-foreground font-medium mt-1">{event.time}</div>
+                            <div className="flex-grow text-center md:text-left">
+                                <div className="text-muted-foreground font-medium mb-1">{event.time}</div>
+                                <h3 className="font-headline text-2xl font-bold leading-tight mb-2">{event.title}</h3>
+                                <div className="flex items-center justify-center md:justify-start gap-2 text-sm text-muted-foreground mb-3">
+                                    <MapPin className="h-4 w-4 shrink-0" />
+                                    <span>{event.location}</span>
+                                </div>
+                                <p className="text-muted-foreground mb-4 text-sm">{event.description}</p>
                             </div>
-                        </div>
-                        
-                        <p className="text-muted-foreground mb-4 text-sm flex-grow">{event.description}</p>
-                        
-                        <div className="flex items-start gap-2 text-sm text-muted-foreground mb-6">
-                            <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
-                            <span>{event.location}</span>
-                        </div>
-
-                        <div className="mt-auto">
-                            <Button asChild size="sm" className="w-full group-hover:bg-primary/90 transition-colors">
-                                <Link href={event.link}>
-                                    Register Now <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                                </Link>
-                            </Button>
-                        </div>
-                    </CardContent>
-                </Card>
+                            <div className="mt-auto shrink-0">
+                                <Button asChild size="sm" className="group-hover:bg-primary/90 transition-colors w-full sm:w-auto">
+                                    <Link href={event.link}>
+                                        Register Now <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                    </Link>
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
             ))}
         </div>
+        </div>
+
 
         {/* Past Events Section */}
         <div className="mt-32">
@@ -125,6 +127,7 @@ export default function EventsPage() {
                         <CardContent className="p-6 flex flex-col flex-grow">
                             <div className="flex items-baseline gap-2 mb-2">
                                 <span className="font-headline text-3xl font-bold text-primary/90">{event.date}</span>
+
                                 <span className="text-lg font-semibold text-muted-foreground">{event.month}</span>
                                 <span className="text-lg text-muted-foreground">{event.year}</span>
                             </div>
