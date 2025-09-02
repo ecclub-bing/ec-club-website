@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Users, Lightbulb, BarChart } from "lucide-react";
+import { ArrowRight, Users, Lightbulb, BarChart, TrendingUp, Target, Handshake } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -51,7 +51,7 @@ const events = [
 
 export default function Home() {
   return (
-    <div className="flex flex-col bg-background">
+    <div className="flex flex-col bg-background overflow-hidden">
       {/* Hero Section */}
       <section className="relative h-[90vh] min-h-[600px] w-full flex items-center justify-center text-center text-white overflow-hidden">
         <Image
@@ -82,8 +82,13 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-secondary/20">
-        <div className="container mx-auto px-4">
+      <section className="py-16 bg-secondary/20 relative">
+        <div className="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 w-48 h-48 bg-primary/5 rounded-full" />
+        <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-32 h-32 bg-primary/5 rounded-full" />
+        <TrendingUp className="absolute top-1/4 right-[10%] h-16 w-16 text-primary/10 -rotate-12" />
+        <Target className="absolute bottom-1/4 left-[15%] h-12 w-12 text-primary/10 rotate-12" />
+
+        <div className="container mx-auto px-4 relative">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="flex flex-col items-center gap-4 p-6 rounded-lg animate-fade-in-up animation-delay-300">
               <div className="bg-primary text-primary-foreground rounded-full p-4">
@@ -112,9 +117,10 @@ export default function Home() {
 
 
       {/* Articles Section */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 animate-fade-in-up">
+      <section className="py-16 md:py-20 relative">
+        <Handshake className="absolute bottom-1/4 right-[5%] h-24 w-24 text-primary/5 rotate-12" />
+        <div className="container mx-auto px-4 relative">
+          <div className="text-center mb-12 animate-fade-in-up">
             <h2 className="font-headline text-4xl font-bold">Latest Insights</h2>
             <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">Explore stories, tips, and news from our entrepreneurial community.</p>
           </div>
@@ -146,7 +152,9 @@ export default function Home() {
       </section>
 
       {/* Upcoming Events Section */}
-      <section className="py-20 md:py-28 bg-secondary/20">
+      <section className="py-16 md:py-20 bg-secondary/20 relative">
+        <div className="absolute top-10 right-0 -translate-x-1/4 -translate-y-1/4 w-48 h-48 bg-primary/5 rounded-full" />
+        <div className="absolute bottom-10 left-0 translate-x-1/4 translate-y-1/4 w-32 h-32 bg-primary/5 rounded-full" />
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="lg:col-span-1 animate-fade-in-up">
