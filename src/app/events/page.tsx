@@ -73,41 +73,38 @@ export default function EventsPage() {
           </p>
         </div>
 
-        {/* Upcoming Events Timeline */}
-        <div className="relative max-w-5xl mx-auto">
-            <div className="absolute left-1/2 h-full w-0.5 bg-border -translate-x-1/2"></div>
-
+        {/* Upcoming Events Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {upcomingEvents.map((event, index) => (
-                <div key={index} className={`mb-12 flex items-center w-full ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
-                    <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
-                        <Card className="group shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out hover:-translate-y-1 border-transparent hover:border-primary/50 relative overflow-hidden">
-                            <CardContent className="p-6 relative z-10">
-                                <div className="absolute top-4 -right-10 transform -rotate-45 bg-primary/10 text-primary font-bold text-sm py-1 px-12 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Featured</div>
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="flex flex-col items-center justify-center bg-primary text-primary-foreground rounded-lg p-3 w-20 h-20">
-                                        <span className="text-3xl font-bold font-headline">{event.date}</span>
-                                        <span className="text-sm font-semibold">{event.month}</span>
-                                    </div>
-                                    <div>
-                                        <h3 className="font-headline text-2xl font-bold">{event.title}</h3>
-                                        <div className="text-muted-foreground font-medium">{event.time}</div>
-                                    </div>
-                                </div>
-                                
-                                <p className="text-muted-foreground mb-4">{event.description}</p>
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-                                    <MapPin className="h-4 w-4" />
-                                    <span>{event.location}</span>
-                                </div>
-                                <Button asChild size="sm" className="group-hover:bg-primary/90 transition-colors">
-                                    <Link href={event.link}>
-                                        Register Now <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                                    </Link>
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </div>
+                <Card key={index} className="group shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out hover:-translate-y-1 border-transparent hover:border-primary/50 relative overflow-hidden flex flex-col">
+                    <CardContent className="p-6 relative z-10 flex flex-col flex-grow">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="flex flex-col items-center justify-center bg-primary text-primary-foreground rounded-lg p-3 w-20 h-20 text-center shrink-0">
+                                <span className="text-3xl font-bold font-headline">{event.date}</span>
+                                <span className="text-sm font-semibold uppercase">{event.month}</span>
+                            </div>
+                            <div>
+                                <h3 className="font-headline text-xl font-bold leading-tight">{event.title}</h3>
+                                <div className="text-muted-foreground font-medium mt-1">{event.time}</div>
+                            </div>
+                        </div>
+                        
+                        <p className="text-muted-foreground mb-4 text-sm flex-grow">{event.description}</p>
+                        
+                        <div className="flex items-start gap-2 text-sm text-muted-foreground mb-6">
+                            <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
+                            <span>{event.location}</span>
+                        </div>
+
+                        <div className="mt-auto">
+                            <Button asChild size="sm" className="w-full group-hover:bg-primary/90 transition-colors">
+                                <Link href={event.link}>
+                                    Register Now <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                </Link>
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
             ))}
         </div>
 
