@@ -26,10 +26,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold">
-            <div className="relative h-16 w-[500px]">
-                <Image src={Logo} alt="InnovateConnect Logo" fill className="object-contain" />
-            </div>
+        <Link href="/">
+            <Image src={Logo} alt="Entrepreneur Connect Logo" width={250} height={60} />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
@@ -62,10 +60,8 @@ export function Header() {
             </SheetTrigger>
             <SheetContent side="right">
               <nav className="grid gap-6 text-lg font-medium mt-12">
-                <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold mb-4">
-                    <div className="relative h-16 w-96">
-                        <Image src={Logo} alt="InnovateConnect Logo" fill className="object-contain" />
-                    </div>
+                <Link href="/" className="mb-4">
+                  <Image src={Logo} alt="Entrepreneur Connect Logo" width={250} height={60}/>
                 </Link>
                 {navLinks.map(({ href, label }) => (
                   <Link

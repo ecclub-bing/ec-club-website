@@ -13,10 +13,8 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
-            <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold mb-4">
-                <div className="relative h-16 w-[500px]">
-                    <Image src={Logo} alt="InnovateConnect Logo" fill className="object-contain" />
-                </div>
+            <Link href="/" className="mb-4">
+                <Image src={Logo} alt="Entrepreneur Connect Logo" width={300} height={75} />
             </Link>
              <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Entrepreneur Connect. All Rights Reserved.</p>
           </div>
