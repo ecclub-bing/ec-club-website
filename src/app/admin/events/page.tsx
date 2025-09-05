@@ -40,13 +40,15 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { isAfter, isBefore, parseISO, format } from "date-fns";
+import { isBefore, parseISO, format } from "date-fns";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface Event {
   id: string;
   title: string;
   date: string;
   location?: string;
+  time?: string;
 }
 
 const EventTable = ({
@@ -54,97 +56,105 @@ const EventTable = ({
   isLoading,
   isDeleting,
   handleDelete,
+  noEventsMessage,
 }: {
   events: Event[];
   isLoading: boolean;
   isDeleting: string | null;
   handleDelete: (id: string) => void;
+  noEventsMessage: string;
 }) => (
-  <div className="border rounded-lg">
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Title</TableHead>
-          <TableHead>Date</TableHead>
-          <TableHead>Location</TableHead>
-          <TableHead className="text-right">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {isLoading ? (
-          Array.from({ length: 3 }).map((_, i) => (
-            <TableRow key={i}>
-              <TableCell>
-                <Skeleton className="h-4 w-48" />
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-4 w-24" />
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-4 w-32" />
-              </TableCell>
-              <TableCell className="text-right">
-                <Skeleton className="h-8 w-10 inline-block" />
-              </TableCell>
-            </TableRow>
-          ))
-        ) : events.length > 0 ? (
-          events.map((event) => (
-            <TableRow key={event.id}>
-              <TableCell className="font-medium">{event.title}</TableCell>
-              <TableCell>
-                {new Date(event.date).toLocaleDateString("en-US", {
-                  timeZone: "UTC",
-                })}
-              </TableCell>
-              <TableCell>{event.location || "N/A"}</TableCell>
-              <TableCell className="text-right">
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      disabled={isDeleting === event.id}
-                    >
-                      {isDeleting === event.id ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Trash2 className="h-4 w-4 text-destructive" />
-                      )}
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete the event.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={() => handleDelete(event.id)}
-                        className="bg-destructive hover:bg-destructive/90"
-                      >
-                        Delete
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </TableCell>
-            </TableRow>
-          ))
-        ) : (
+  <Card>
+    <CardContent className="p-0">
+      <Table>
+        <TableHeader>
           <TableRow>
-            <TableCell colSpan={4} className="text-center h-24">
-              No events found.
-            </TableCell>
+            <TableHead className="w-[40%]">Title</TableHead>
+            <TableHead>Date</TableHead>
+            <TableHead>Time</TableHead>
+            <TableHead>Location</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
-        )}
-      </TableBody>
-    </Table>
-  </div>
+        </TableHeader>
+        <TableBody>
+          {isLoading ? (
+            Array.from({ length: 3 }).map((_, i) => (
+              <TableRow key={i}>
+                <TableCell>
+                  <Skeleton className="h-5 w-48" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-5 w-24" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-5 w-20" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-5 w-32" />
+                </TableCell>
+                <TableCell className="text-right">
+                  <Skeleton className="h-9 w-10 inline-block" />
+                </TableCell>
+              </TableRow>
+            ))
+          ) : events.length > 0 ? (
+            events.map((event) => (
+              <TableRow key={event.id}>
+                <TableCell className="font-medium">{event.title}</TableCell>
+                <TableCell>
+                  {format(parseISO(event.date), "MMM d, yyyy")}
+                </TableCell>
+                 <TableCell className="text-muted-foreground">{event.time || "N/A"}</TableCell>
+                <TableCell className="text-muted-foreground">{event.location || "N/A"}</TableCell>
+                <TableCell className="text-right">
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        disabled={isDeleting === event.id}
+                        className="text-muted-foreground hover:text-destructive"
+                      >
+                        {isDeleting === event.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Trash2 className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete the event.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDelete(event.id)}
+                          className="bg-destructive hover:bg-destructive/90"
+                        >
+                          Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={5} className="text-center h-32 text-muted-foreground">
+                {noEventsMessage}
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </CardContent>
+  </Card>
 );
 
 export default function ManageEventsPage() {
@@ -208,9 +218,12 @@ export default function ManageEventsPage() {
 
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold font-headline">Manage Events</h1>
+    <div className="space-y-8">
+      <div className="flex justify-between items-center">
+        <div>
+            <h1 className="text-3xl font-bold font-headline">Manage Events</h1>
+            <p className="text-muted-foreground mt-1">Create, view, and manage your organization's events.</p>
+        </div>
         <Button asChild>
           <Link href="/admin/events/new">
             <PlusCircle className="mr-2" />
@@ -221,8 +234,8 @@ export default function ManageEventsPage() {
 
       <Tabs defaultValue="upcoming">
         <TabsList className="mb-4">
-          <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-          <TabsTrigger value="past">Past</TabsTrigger>
+          <TabsTrigger value="upcoming">Upcoming Events</TabsTrigger>
+          <TabsTrigger value="past">Past Events</TabsTrigger>
         </TabsList>
         <TabsContent value="upcoming">
           <EventTable
@@ -230,6 +243,7 @@ export default function ManageEventsPage() {
             isLoading={isLoading}
             isDeleting={isDeleting}
             handleDelete={handleDelete}
+            noEventsMessage="There are no upcoming events."
           />
         </TabsContent>
         <TabsContent value="past">
@@ -238,6 +252,7 @@ export default function ManageEventsPage() {
             isLoading={isLoading}
             isDeleting={isDeleting}
             handleDelete={handleDelete}
+            noEventsMessage="There are no past events in the archive."
           />
         </TabsContent>
       </Tabs>
