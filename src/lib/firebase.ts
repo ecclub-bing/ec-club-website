@@ -14,6 +14,11 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
 };
 
+if (!firebaseConfig.apiKey) {
+    throw new Error("Missing Firebase API Key. Please make sure you have a .env.local file with your Firebase configuration.");
+}
+
+
 let app: FirebaseApp;
 
 // Initialize Firebase
