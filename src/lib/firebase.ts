@@ -18,6 +18,8 @@ let app: FirebaseApp;
 let auth: Auth;
 let db: Firestore;
 let seedingPromise: Promise<void> | null = null;
+let eventSeedingPromise: Promise<void> | null = null;
+
 
 // Singleton initialization for Firebase
 if (getApps().length === 0) {
@@ -85,8 +87,65 @@ const addSampleArticles = async () => {
   await seedingPromise;
 };
 
+const addSampleEvents = async () => {
+  if (eventSeedingPromise) {
+    return eventSeedingPromise;
+  }
+
+  const eventsCollection = collection(db, "events");
+  const q = query(eventsCollection, limit(1));
+
+  eventSeedingPromise = (async () => {
+    try {
+      const eventsSnapshot = await getDocs(q);
+      if (eventsSnapshot.empty) {
+        console.log("No events found, adding sample data...");
+        const sampleEvents = [
+          {
+            title: "Fall 2024 Pitch-It Competition",
+            date: "2024-11-15",
+            time: "6:00 PM - 8:00 PM",
+            location: "Koffman Incubator",
+            description: "Pitch your startup idea to a panel of judges for a chance to win seed funding and mentorship.",
+            link: "https://forms.gle/example",
+          },
+          {
+            title: "Fireside Chat with Alumni Founder",
+            date: "2024-10-22",
+            time: "7:00 PM",
+            location: "Lecture Hall 12",
+            description: "Join us for an inspiring conversation with a successful Binghamton alumni who founded a multi-million dollar tech company.",
+            link: "",
+          },
+          {
+            title: "Resume & LinkedIn Workshop",
+            date: "2024-09-30",
+            time: "5:30 PM",
+            location: "UU-108",
+            description: "Perfect your professional brand. Get expert tips on crafting a standout resume and optimizing your LinkedIn profile for the startup world.",
+            link: "",
+          },
+        ];
+
+        for (const event of sampleEvents) {
+          await addDoc(eventsCollection, event);
+          console.log(`Added sample event: ${event.title}`);
+        }
+      } else {
+        console.log("Events collection is not empty, skipping sample data.");
+      }
+    } catch (error) {
+      console.error("Error checking or adding sample events:", error);
+    }
+  })();
+  
+  await eventSeedingPromise;
+}
+
+
 // We will call this function inside a useEffect in a component to avoid race conditions.
 addSampleArticles();
+addSampleEvents();
 
 
 export { app, auth, db };
