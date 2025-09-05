@@ -33,7 +33,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, Loader2, PlusCircle, Trash2 } from "lucide-react";
+import { Eye, Loader2, Pencil, PlusCircle, Trash2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface Article {
@@ -74,6 +74,7 @@ export default function ManageArticlesPage() {
 
   useEffect(() => {
     fetchArticles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDelete = async (id: string) => {
@@ -143,6 +144,11 @@ export default function ManageArticlesPage() {
                     <Button variant="ghost" size="icon" asChild>
                        <Link href={article.linkedinUrl} target="_blank">
                          <Eye className="h-4 w-4" />
+                       </Link>
+                    </Button>
+                     <Button variant="ghost" size="icon" asChild>
+                       <Link href={`/admin/articles/edit/${article.id}`}>
+                         <Pencil className="h-4 w-4" />
                        </Link>
                     </Button>
                     <AlertDialog>
