@@ -3,7 +3,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Users, Lightbulb, BarChart, TrendingUp, Target, Handshake, CalendarDays } from "lucide-react";
+import { ArrowRight, Users, Lightbulb, BarChart, TrendingUp, Target, Handshake, CalendarDays, Info } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
@@ -123,12 +123,45 @@ function FeaturesSection() {
     );
 }
 
-function ArticlesSection({ articles, isLoading }: { articles: Article[], isLoading: boolean }) {
+function AboutSection() {
     return (
         <section className="py-16 md:py-20 relative">
-            <Handshake className="absolute bottom-1/4 right-[5%] h-24 w-24 text-primary/15 rotate-12" />
-            <div className="absolute top-10 left-10 w-56 h-56 bg-primary/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 right-0 w-40 h-40 bg-primary/10 rounded-full translate-x-1/2 translate-y-1/2" />
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <AnimatedSection>
+                        <div className="relative w-full h-80 rounded-lg shadow-2xl">
+                             <Image 
+                                src="https://picsum.photos/800/600"
+                                alt="Students collaborating"
+                                fill
+                                className="object-cover rounded-lg"
+                                data-ai-hint="students collaborating"
+                             />
+                        </div>
+                    </AnimatedSection>
+                    <AnimatedSection className="text-left">
+                        <h2 className="font-headline text-3xl font-bold mb-4">What is Entrepreneur Connect?</h2>
+                        <p className="text-muted-foreground mb-6">
+                            Entrepreneur Connect is a student founded and run professional organization at Binghamton University's campus. Our main focus is helping students with entrepreneurial interests get a headstart through: resources, connections, and other student entrepreneurs.
+                        </p>
+                        <Button asChild size="lg" className="group transition-all duration-300 ease-in-out bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg">
+                            <Link href="/about">
+                                Learn More <ArrowRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </Button>
+                    </AnimatedSection>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+function ArticlesSection({ articles, isLoading }: { articles: Article[], isLoading: boolean }) {
+    return (
+        <section className="py-16 md:py-20 bg-secondary/20 relative">
+            <Handshake className="absolute bottom-1/4 right-[5%] h-24 w-24 text-primary/10 rotate-12" />
+            <div className="absolute top-10 left-10 w-56 h-56 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 right-0 w-40 h-40 bg-primary/5 rounded-full translate-x-1/2 translate-y-1/2" />
             <div className="container mx-auto px-4 relative">
                 <AnimatedSection className="text-center mb-12">
                     <h2 className="font-headline text-4xl font-bold">Latest Insights</h2>
@@ -183,11 +216,11 @@ function ArticlesSection({ articles, isLoading }: { articles: Article[], isLoadi
 
 function EventsSection({ events, isLoading }: { events: Event[], isLoading: boolean }) {
     return (
-        <section className="py-16 md:py-20 bg-secondary/20 relative">
-            <div className="absolute top-10 right-0 -translate-x-1/4 -translate-y-1/4 w-48 h-48 bg-primary/10 rounded-full" />
-            <div className="absolute bottom-10 left-0 translate-x-1/4 translate-y-1/4 w-32 h-32 bg-primary/10 rounded-full" />
-            <CalendarDays className="absolute top-1/4 left-[10%] h-20 w-20 text-primary/15 rotate-12" />
-            <div className="absolute bottom-1/4 right-[15%] w-24 h-24 bg-primary/10 rounded-full" />
+        <section className="py-16 md:py-20 bg-background relative">
+            <div className="absolute top-10 right-0 -translate-x-1/4 -translate-y-1/4 w-48 h-48 bg-primary/5 rounded-full" />
+            <div className="absolute bottom-10 left-0 translate-x-1/4 translate-y-1/4 w-32 h-32 bg-primary/5 rounded-full" />
+            <CalendarDays className="absolute top-1/4 left-[10%] h-20 w-20 text-primary/10 rotate-12" />
+            <div className="absolute bottom-1/4 right-[15%] w-24 h-24 bg-primary/5 rounded-full" />
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <AnimatedSection className="lg:col-span-1">
@@ -208,7 +241,7 @@ function EventsSection({ events, isLoading }: { events: Event[], isLoading: bool
                             ) : events.length > 0 ? (
                                 events.map((event, index) => (
                                     <AnimatedSection key={event.id}>
-                                        <Link href={event.link || `/events`} className="block bg-background p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-l-4 border-primary group">
+                                        <Link href={event.link || `/events`} className="block bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-l-4 border-primary group">
                                             <div className="flex items-center gap-6">
                                                 <div className="flex flex-col items-center justify-center text-primary w-16 text-center shrink-0">
                                                     <span className="font-headline font-bold text-sm uppercase">{format(parseISO(event.date), 'MMM')}</span>
@@ -224,7 +257,7 @@ function EventsSection({ events, isLoading }: { events: Event[], isLoading: bool
                                     </AnimatedSection>
                                 ))
                             ) : (
-                                 <p className="text-center text-muted-foreground bg-background/50 p-6 rounded-lg">No upcoming events. Check back soon!</p>
+                                 <p className="text-center text-muted-foreground bg-card p-6 rounded-lg">No upcoming events. Check back soon!</p>
                             )}
                         </div>
                     </div>
@@ -310,8 +343,11 @@ export default function Home() {
       </section>
 
       <FeaturesSection />
+      <AboutSection />
       <ArticlesSection articles={articles} isLoading={isLoading} />
       <EventsSection events={events} isLoading={isLoading} />
     </div>
   );
 }
+
+    
