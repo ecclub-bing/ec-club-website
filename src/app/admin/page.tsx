@@ -1,12 +1,50 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Calendar, Settings } from "lucide-react";
+import { FileText, Calendar, LogOut } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "@/hooks/use-auth";
+import { auth } from "@/lib/firebase";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AdminPage() {
+    const { user } = useAuth();
+    const router = useRouter();
+    const { toast } = useToast();
+
+    const handleSignOut = async () => {
+        try {
+            await auth.signOut();
+            toast({
+                title: "Signed Out",
+                description: "You have been successfully signed out.",
+            });
+            router.push('/login');
+        } catch (error) {
+            toast({
+                variant: "destructive",
+                title: "Sign Out Error",
+                description: "Failed to sign out. Please try again.",
+            });
+        }
+    };
+
     return (
         <div className="container mx-auto px-4 py-12">
-            <h1 className="text-4xl font-bold font-headline mb-8">Admin Dashboard</h1>
-            <p className="text-muted-foreground mb-12">Welcome! Here you can manage your site's content.</p>
+            <div className="flex justify-between items-start mb-8">
+                <div>
+                    <h1 className="text-4xl font-bold font-headline">Admin Dashboard</h1>
+                    {user && <p className="text-muted-foreground mt-2">Welcome, {user.email}!</p>}
+                </div>
+                <Button variant="outline" onClick={handleSignOut}>
+                    Sign Out
+                    <LogOut className="ml-2 h-4 w-4" />
+                </Button>
+            </div>
+            
+            <p className="text-muted-foreground mb-12">Here you can manage your site's content.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <Link href="/admin/articles">
