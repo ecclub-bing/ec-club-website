@@ -36,8 +36,6 @@ export default function ManageHomepage() {
   const [isFetching, setIsFetching] = useState(true);
   const [isUploading, setIsUploading] = useState<"hero" | "about" | null>(null);
   
-  const homepageDocRef = doc(db, "homepage", "main");
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,6 +48,7 @@ export default function ManageHomepage() {
     const fetchHomepageContent = async () => {
       setIsFetching(true);
       try {
+        const homepageDocRef = doc(db, "homepage", "main");
         const docSnap = await getDoc(homepageDocRef);
         if (docSnap.exists()) {
           form.reset(docSnap.data() as z.infer<typeof formSchema>);
@@ -70,7 +69,7 @@ export default function ManageHomepage() {
     };
 
     fetchHomepageContent();
-  }, [form, toast, homepageDocRef]);
+  }, [form, toast]);
   
   const handleImageUpload = async (file: File, field: "heroImageUrl" | "aboutImageUrl") => {
     setIsUploading(field);
@@ -112,6 +111,7 @@ export default function ManageHomepage() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {
+      const homepageDocRef = doc(db, "homepage", "main");
       await setDoc(homepageDocRef, values);
       toast({
         title: "Homepage Updated!",
