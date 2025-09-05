@@ -24,21 +24,6 @@ export default function AdminPage() {
                         </CardContent>
                     </Card>
                 </Link>
-                <Link href="/admin/settings">
-                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
-                        <CardHeader className="flex flex-row items-center justify-between pb-2">
-                            <CardTitle className="text-lg font-medium">
-                                Site Settings
-                            </CardTitle>
-                            <Settings className="h-6 w-6 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-sm text-muted-foreground">
-                                Update your site logo and other settings.
-                            </p>
-                        </CardContent>
-                    </Card>
-                </Link>
                 <Link href="#">
                      <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full bg-secondary/50">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">

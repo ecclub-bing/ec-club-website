@@ -1,50 +1,16 @@
 "use client";
 
-import { Briefcase, Instagram, Linkedin } from "lucide-react";
+import { Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import Image from "next/image";
 
 export function Footer() {
-    const [logoUrl, setLogoUrl] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchLogo = async () => {
-            try {
-                const settingsDocRef = doc(db, "settings", "site");
-                const docSnap = await getDoc(settingsDocRef);
-                if (docSnap.exists() && docSnap.data().logoUrl) {
-                    setLogoUrl(docSnap.data().logoUrl);
-                }
-            } catch (error) {
-                console.error("Failed to fetch logo:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-        fetchLogo();
-    }, []);
-
     const renderLogo = () => {
-        if (isLoading) {
-          return <div className="h-12 w-64" />; // Placeholder for server and initial client render
-        }
-        if (logoUrl) {
-          return (
-            <div className="relative h-12 w-64">
-                <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
-            </div>
-          );
-        }
         return (
-          <>
-            <Briefcase className="h-6 w-6 text-primary" />
-            <span>InnovateConnect</span>
-          </>
+            <div className="relative h-12 w-64">
+                <Image src="/logo.png" alt="InnovateConnect Logo" fill className="object-contain" />
+            </div>
         );
       };
 
