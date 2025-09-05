@@ -40,7 +40,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { isAfter, isBefore, parseISO } from "date-fns";
+import { isAfter, isBefore, parseISO, format } from "date-fns";
 
 interface Event {
   id: string;
@@ -203,8 +203,8 @@ export default function ManageEventsPage() {
   const today = new Date();
   today.setHours(0, 0, 0, 0); 
   
-  const upcomingEvents = events.filter((event) => isAfter(parseISO(event.date), today) || event.date === format(today, 'yyyy-MM-dd'));
-  const pastEvents = events.filter((event) => isBefore(parseISO(event.date), today) && event.date !== format(today, 'yyyy-MM-dd'));
+  const upcomingEvents = events.filter((event) => !isBefore(parseISO(event.date), today));
+  const pastEvents = events.filter((event) => isBefore(parseISO(event.date), today));
 
 
   return (
