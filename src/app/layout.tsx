@@ -7,6 +7,9 @@ import { Toaster } from "@/components/ui/toaster"
 export const metadata: Metadata = {
   title: 'Entrepreneur Connect',
   description: 'Uniting like-minded innovators and leaders to do what they do best.',
+  icons: {
+    icon: '/logo.png',
+  },
 };
 
 export default function RootLayout({
