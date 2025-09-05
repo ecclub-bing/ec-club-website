@@ -9,6 +9,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import Image from "next/image";
+import Logo from '@/assets/logo.png';
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -27,7 +28,7 @@ export function Header() {
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold">
             <div className="relative h-12 w-64">
-                <Image src="/logo.png" alt="InnovateConnect Logo" fill className="object-contain" />
+                <Image src={Logo} alt="InnovateConnect Logo" fill className="object-contain" />
             </div>
         </Link>
 
@@ -63,7 +64,7 @@ export function Header() {
               <nav className="grid gap-6 text-lg font-medium mt-12">
                 <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold mb-4">
                     <div className="relative h-12 w-64">
-                        <Image src="/logo.png" alt="InnovateConnect Logo" fill className="object-contain" />
+                        <Image src={Logo} alt="InnovateConnect Logo" fill className="object-contain" />
                     </div>
                 </Link>
                 {navLinks.map(({ href, label }) => (
