@@ -6,13 +6,6 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 
 export function Footer() {
-    const renderLogo = () => {
-        return (
-            <div className="relative h-12 w-64">
-                <Image src="/logo.png" alt="InnovateConnect Logo" fill className="object-contain" />
-            </div>
-        );
-      };
 
   return (
     <footer className="bg-secondary/40 border-t">
@@ -20,7 +13,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold mb-4">
-                {renderLogo()}
+                <div className="relative h-12 w-64">
+                    <Image src="/logo.png" alt="InnovateConnect Logo" fill className="object-contain" />
+                </div>
             </Link>
              <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Entrepreneur Connect. All Rights Reserved.</p>
           </div>

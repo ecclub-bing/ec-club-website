@@ -22,19 +22,13 @@ export function Header() {
   const pathname = usePathname();
   const [isSheetOpen, setSheetOpen] = useState(false);
 
-  const renderLogo = () => {
-    return (
-      <div className="relative h-12 w-64">
-          <Image src="/logo.png" alt="InnovateConnect Logo" fill className="object-contain" />
-      </div>
-    );
-  };
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold">
-            {renderLogo()}
+            <div className="relative h-12 w-64">
+                <Image src="/logo.png" alt="InnovateConnect Logo" fill className="object-contain" />
+            </div>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
@@ -68,7 +62,9 @@ export function Header() {
             <SheetContent side="right">
               <nav className="grid gap-6 text-lg font-medium mt-12">
                 <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold mb-4">
-                    {renderLogo()}
+                    <div className="relative h-12 w-64">
+                        <Image src="/logo.png" alt="InnovateConnect Logo" fill className="object-contain" />
+                    </div>
                 </Link>
                 {navLinks.map(({ href, label }) => (
                   <Link
