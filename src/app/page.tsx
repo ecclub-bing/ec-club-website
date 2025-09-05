@@ -74,7 +74,7 @@ export default function Home() {
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent" />
-        <div className="relative z-10 flex flex-col items-center gap-6 p-4 animate-fade-in-up animation-delay-300">
+        <div className="relative z-10 flex flex-col items-center gap-6 p-4 animate-fade-in-up animation-delay-300 container mx-auto px-4">
           <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tight text-shadow-lg animate-fade-in-up animation-delay-500">
             Entrepreneur Connect
           </h1>

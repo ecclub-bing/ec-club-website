@@ -22,8 +22,8 @@ const eBoardMembers = [
 
 export default function AboutPage() {
   return (
-    <div className="bg-background">
-      <div className="container mx-auto px-4 py-16 sm:py-24">
+    <div className="bg-background container mx-auto px-4">
+      <div className="py-16 sm:py-24">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl font-headline">
             About <span className="text-primary">Us</span>
