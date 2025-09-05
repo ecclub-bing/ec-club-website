@@ -24,11 +24,11 @@ export default function AdminPage() {
                         </CardContent>
                     </Card>
                 </Link>
-                <Link href="#">
-                     <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full bg-secondary/50">
+                <Link href="/admin/events">
+                     <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
                             <CardTitle className="text-lg font-medium">
-                                Manage Events (Coming Soon)
+                                Manage Events
                             </CardTitle>
                             <Calendar className="h-6 w-6 text-muted-foreground" />
                         </CardHeader>
