@@ -38,10 +38,10 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold">
             {logoUrl ? (
-                <div className="relative h-10 w-48">
+                <div className="relative h-12 w-64">
                     <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
                 </div>
             ) : (
@@ -84,7 +84,7 @@ export function Header() {
               <nav className="grid gap-6 text-lg font-medium mt-12">
                 <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold mb-4">
                     {logoUrl ? (
-                        <div className="relative h-10 w-48">
+                        <div className="relative h-12 w-64">
                             <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
                         </div>
                     ) : (

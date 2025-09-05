@@ -30,7 +30,7 @@ export function Footer() {
           <div className="flex flex-col items-center md:items-start">
             <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold mb-4">
                 {logoUrl ? (
-                    <div className="relative h-10 w-48">
+                    <div className="relative h-12 w-64">
                         <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
                     </div>
                 ) : (
