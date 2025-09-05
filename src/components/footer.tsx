@@ -14,7 +14,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold mb-4">
-                <div className="relative h-16 w-80">
+                <div className="relative h-16 w-96">
                     <Image src={Logo} alt="InnovateConnect Logo" fill className="object-contain" />
                 </div>
             </Link>
