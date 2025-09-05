@@ -7,10 +7,10 @@ import { ArrowRight, Users, Lightbulb, BarChart, TrendingUp, Target, Handshake }
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { collection, getDocs, orderBy, query, limit, where, Timestamp } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, limit, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Skeleton } from "@/components/ui/skeleton";
-import { format, isBefore, parseISO } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 interface Article {
   id: string;
@@ -238,5 +238,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
