@@ -1,35 +1,36 @@
+
 // Import the functions you need from the SDKs you need
 import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
 import { getAuth, Auth } from "firebase/auth";
 import { getFirestore, collection, addDoc, getDocs, query, limit, Firestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
+// Your web app's Firebase configuration for Vercel
 const firebaseConfig = {
-  projectId: "ec-club-bing-website",
-  appId: "1:681859925462:web:f4ca8eb152b1a1991ad077",
-  storageBucket: "ec-club-bing-website.firebasestorage.app",
-  apiKey: "AIzaSyDZ_XQSIEMPHRZn7z2ge4NNbpzhze87qtQ",
-  authDomain: "ec-club-bing-website.firebaseapp.com",
-  measurementId: "",
-  messagingSenderId: "681859925462"
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
 };
 
 let app: FirebaseApp;
-let auth: Auth;
-let db: Firestore;
-let seedingPromise: Promise<void> | null = null;
-let eventSeedingPromise: Promise<void> | null = null;
 
-
-// Singleton initialization for Firebase
+// Initialize Firebase
+// In a Vercel environment, the env vars will be used.
+// In the Firebase Studio environment, the SDK will automatically use the project's configuration.
 if (getApps().length === 0) {
-  app = initializeApp(firebaseConfig);
+    app = initializeApp(firebaseConfig.apiKey ? firebaseConfig : {});
 } else {
   app = getApp();
 }
 
-auth = getAuth(app);
-db = getFirestore(app);
+const auth: Auth = getAuth(app);
+const db: Firestore = getFirestore(app);
+
+
+let seedingPromise: Promise<void> | null = null;
+let eventSeedingPromise: Promise<void> | null = null;
 
 const addSampleArticles = async () => {
   if (seedingPromise) {
