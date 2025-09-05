@@ -32,7 +32,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, PlusCircle, Trash2 } from "lucide-react";
+import { Loader2, Pencil, PlusCircle, Trash2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tabs,
@@ -92,7 +92,8 @@ const EventTable = ({
                 <TableCell>
                   <Skeleton className="h-5 w-32" />
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-right space-x-2">
+                  <Skeleton className="h-9 w-10 inline-block" />
                   <Skeleton className="h-9 w-10 inline-block" />
                 </TableCell>
               </TableRow>
@@ -107,6 +108,11 @@ const EventTable = ({
                  <TableCell className="text-muted-foreground">{event.time || "N/A"}</TableCell>
                 <TableCell className="text-muted-foreground">{event.location || "N/A"}</TableCell>
                 <TableCell className="text-right">
+                  <Button variant="ghost" size="icon" asChild className="text-muted-foreground hover:text-primary">
+                    <Link href={`/admin/events/edit/${event.id}`}>
+                      <Pencil className="h-4 w-4" />
+                    </Link>
+                  </Button>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button
@@ -218,7 +224,7 @@ export default function ManageEventsPage() {
 
 
   return (
-    <div className="space-y-8 container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 space-y-8">
       <div className="flex justify-between items-center">
         <div>
             <h1 className="text-3xl font-bold font-headline">Manage Events</h1>
