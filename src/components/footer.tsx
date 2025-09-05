@@ -14,7 +14,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <Link href="/" className="mb-4">
-                <Image src={Logo} alt="Entrepreneur Connect Logo" width={300} height={75} />
+                <Image src={Logo} alt="Entrepreneur Connect Logo" width={250} height={60} />
             </Link>
              <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Entrepreneur Connect. All Rights Reserved.</p>
           </div>
