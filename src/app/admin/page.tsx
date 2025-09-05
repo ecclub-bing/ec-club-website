@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Calendar, LogOut } from "lucide-react";
+import { FileText, Calendar, LogOut, Home } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/hooks/use-auth";
 import { auth } from "@/lib/firebase";
@@ -46,7 +46,22 @@ export default function AdminPage() {
             
             <p className="text-muted-foreground mb-12">Here you can manage your site's content.</p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                 <Link href="/admin/homepage">
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                        <CardHeader className="flex flex-row items-center justify-between pb-2">
+                            <CardTitle className="text-lg font-medium">
+                                Manage Homepage
+                            </CardTitle>
+                            <Home className="h-6 w-6 text-muted-foreground" />
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-sm text-muted-foreground">
+                                Edit images and content on the main landing page.
+                            </p>
+                        </CardContent>
+                    </Card>
+                </Link>
                 <Link href="/admin/articles">
                     <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">

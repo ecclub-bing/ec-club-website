@@ -3,11 +3,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Users, Lightbulb, BarChart, TrendingUp, Target, Handshake, CalendarDays, Info } from "lucide-react";
+import { ArrowRight, Users, Lightbulb, BarChart, TrendingUp, Target, Handshake, CalendarDays } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
-import { collection, getDocs, orderBy, query, limit, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, limit, where, doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format, parseISO } from "date-fns";
@@ -29,6 +29,11 @@ interface Event {
     date: string;
     location?: string;
     link?: string;
+}
+
+interface HomepageContent {
+    heroImageUrl: string;
+    aboutImageUrl: string;
 }
 
 // Custom hook to detect when an element is on screen
@@ -123,7 +128,7 @@ function FeaturesSection() {
     );
 }
 
-function AboutSection() {
+function AboutSection({ aboutImageUrl }: { aboutImageUrl: string }) {
     return (
         <section className="py-16 md:py-20 relative">
             <div className="container mx-auto px-4">
@@ -131,7 +136,7 @@ function AboutSection() {
                     <AnimatedSection>
                         <div className="relative w-full h-80 rounded-lg shadow-2xl">
                              <Image 
-                                src="https://picsum.photos/800/600"
+                                src={aboutImageUrl}
                                 alt="Students collaborating"
                                 fill
                                 className="object-cover rounded-lg"
@@ -183,7 +188,7 @@ function ArticlesSection({ articles, isLoading }: { articles: Article[], isLoadi
                             </Card>
                         ))
                     ) : (
-                        articles.map((article, index) => (
+                        articles.map((article) => (
                             <AnimatedSection key={article.id}>
                                <Card className="overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border-transparent hover:border-primary h-full flex flex-col">
                                  <CardContent className="p-0">
@@ -239,7 +244,7 @@ function EventsSection({ events, isLoading }: { events: Event[], isLoading: bool
                                    <Skeleton key={index} className="h-28 w-full rounded-lg" />
                                ))
                             ) : events.length > 0 ? (
-                                events.map((event, index) => (
+                                events.map((event) => (
                                     <AnimatedSection key={event.id}>
                                         <Link href={event.link || `/events`} className="block bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-l-4 border-primary group">
                                             <div className="flex items-center gap-6">
@@ -271,12 +276,26 @@ function EventsSection({ events, isLoading }: { events: Event[], isLoading: bool
 export default function Home() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
+  const [homepageContent, setHomepageContent] = useState<HomepageContent | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
+        // Fetch Homepage Content
+        const homepageDocRef = doc(db, "homepage", "main");
+        const homepageDocSnap = await getDoc(homepageDocRef);
+        if (homepageDocSnap.exists()) {
+            setHomepageContent(homepageDocSnap.data() as HomepageContent);
+        } else {
+             // Fallback to default if document doesn't exist
+            setHomepageContent({
+                heroImageUrl: "https://picsum.photos/1920/1080",
+                aboutImageUrl: "https://picsum.photos/800/600",
+            });
+        }
+
         // Fetch Articles
         const articlesCollection = collection(db, "articles");
         const articleQuery = query(articlesCollection, orderBy("date", "desc"), limit(3));
@@ -315,14 +334,18 @@ export default function Home() {
     <div className="flex flex-col bg-background">
       {/* Hero Section */}
       <section className="relative h-[90vh] min-h-[600px] w-full flex items-center justify-center text-center text-white">
-        <Image
-          src="https://picsum.photos/1920/1080"
-          alt="A team of innovators collaborating"
-          fill
-          className="object-cover"
-          data-ai-hint="students meeting"
-          priority
-        />
+        {homepageContent ? (
+          <Image
+            src={homepageContent.heroImageUrl}
+            alt="A team of innovators collaborating"
+            fill
+            className="object-cover"
+            data-ai-hint="students meeting"
+            priority
+          />
+        ) : (
+            <Skeleton className="absolute inset-0" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent" />
         <div className="relative z-10 flex flex-col items-center gap-6 p-4 container mx-auto px-4">
           <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tight text-shadow-lg animate-fade-in-up" style={{animationDelay: '300ms'}}>
@@ -343,11 +366,13 @@ export default function Home() {
       </section>
 
       <FeaturesSection />
-      <AboutSection />
+      {homepageContent ? (
+          <AboutSection aboutImageUrl={homepageContent.aboutImageUrl} />
+      ) : (
+          <Skeleton className="h-[400px] w-full" />
+      )}
       <ArticlesSection articles={articles} isLoading={isLoading} />
       <EventsSection events={events} isLoading={isLoading} />
     </div>
   );
 }
-
-    
