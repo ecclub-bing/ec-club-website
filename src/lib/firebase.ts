@@ -17,10 +17,8 @@ const firebaseConfig = {
 let app: FirebaseApp;
 
 // Initialize Firebase
-// In a Vercel environment, the env vars will be used.
-// In the Firebase Studio environment, the SDK will automatically use the project's configuration.
 if (getApps().length === 0) {
-    app = initializeApp(firebaseConfig.apiKey ? firebaseConfig : {});
+    app = initializeApp(firebaseConfig);
 } else {
   app = getApp();
 }
