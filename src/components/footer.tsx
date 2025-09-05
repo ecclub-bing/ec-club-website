@@ -31,7 +31,7 @@ export function Footer() {
 
     const renderLogo = () => {
         if (isLoading) {
-          return <div className="h-12 w-64" />; // Placeholder to prevent layout shift
+          return <div className="h-12 w-64" />; // Placeholder for server and initial client render
         }
         if (logoUrl) {
           return (
