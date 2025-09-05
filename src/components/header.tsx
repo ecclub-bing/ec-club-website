@@ -27,7 +27,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold">
-            <div className="relative h-12 w-64">
+            <div className="relative h-16 w-80">
                 <Image src={Logo} alt="InnovateConnect Logo" fill className="object-contain" />
             </div>
         </Link>
@@ -63,7 +63,7 @@ export function Header() {
             <SheetContent side="right">
               <nav className="grid gap-6 text-lg font-medium mt-12">
                 <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold mb-4">
-                    <div className="relative h-12 w-64">
+                    <div className="relative h-16 w-80">
                         <Image src={Logo} alt="InnovateConnect Logo" fill className="object-contain" />
                     </div>
                 </Link>
