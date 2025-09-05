@@ -80,12 +80,12 @@ function AnimatedSection({ children, className }: { children: React.ReactNode, c
 function FeaturesSection() {
     return (
         <section className="py-16 bg-secondary/20 relative">
-            <div className="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 w-48 h-48 bg-primary/10 rounded-full" />
-            <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-32 h-32 bg-primary/10 rounded-full" />
-            <TrendingUp className="absolute top-1/4 right-[10%] h-16 w-16 text-primary/20 -rotate-12" />
-            <Target className="absolute bottom-1/4 left-[15%] h-12 w-12 text-primary/20 rotate-12" />
-            <Users className="absolute top-1/2 left-[5%] h-12 w-12 text-primary/10 rotate-6" />
-            <Lightbulb className="absolute bottom-[15%] right-[20%] h-10 w-10 text-primary/10 -rotate-6" />
+            <div className="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 w-48 h-48 bg-primary/20 rounded-full" />
+            <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-32 h-32 bg-primary/20 rounded-full" />
+            <TrendingUp className="absolute top-1/4 right-[10%] h-16 w-16 text-primary/30 -rotate-12" />
+            <Target className="absolute bottom-1/4 left-[15%] h-12 w-12 text-primary/30 rotate-12" />
+            <Users className="absolute top-1/2 left-[5%] h-12 w-12 text-primary/20 rotate-6" />
+            <Lightbulb className="absolute bottom-[15%] right-[20%] h-10 w-10 text-primary/20 -rotate-6" />
 
 
             <div className="container mx-auto px-4 relative">
@@ -126,9 +126,9 @@ function FeaturesSection() {
 function ArticlesSection({ articles, isLoading }: { articles: Article[], isLoading: boolean }) {
     return (
         <section className="py-16 md:py-20 relative">
-            <Handshake className="absolute bottom-1/4 right-[5%] h-24 w-24 text-primary/20 rotate-12" />
-            <div className="absolute top-10 left-10 w-56 h-56 bg-primary/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 right-0 w-40 h-40 bg-primary/10 rounded-full translate-x-1/2 translate-y-1/2" />
+            <Handshake className="absolute bottom-1/4 right-[5%] h-24 w-24 text-primary/30 rotate-12" />
+            <div className="absolute top-10 left-10 w-56 h-56 bg-primary/20 rounded-full -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 right-0 w-40 h-40 bg-primary/20 rounded-full translate-x-1/2 translate-y-1/2" />
             <div className="container mx-auto px-4 relative">
                 <AnimatedSection className="text-center mb-12">
                     <h2 className="font-headline text-4xl font-bold">Latest Insights</h2>
@@ -184,10 +184,10 @@ function ArticlesSection({ articles, isLoading }: { articles: Article[], isLoadi
 function EventsSection({ events, isLoading }: { events: Event[], isLoading: boolean }) {
     return (
         <section className="py-16 md:py-20 bg-secondary/20 relative">
-            <div className="absolute top-10 right-0 -translate-x-1/4 -translate-y-1/4 w-48 h-48 bg-primary/10 rounded-full" />
-            <div className="absolute bottom-10 left-0 translate-x-1/4 translate-y-1/4 w-32 h-32 bg-primary/10 rounded-full" />
-            <CalendarDays className="absolute top-1/4 left-[10%] h-20 w-20 text-primary/20 rotate-12" />
-            <div className="absolute bottom-1/4 right-[15%] w-24 h-24 bg-primary/10 rounded-full" />
+            <div className="absolute top-10 right-0 -translate-x-1/4 -translate-y-1/4 w-48 h-48 bg-primary/20 rounded-full" />
+            <div className="absolute bottom-10 left-0 translate-x-1/4 translate-y-1/4 w-32 h-32 bg-primary/20 rounded-full" />
+            <CalendarDays className="absolute top-1/4 left-[10%] h-20 w-20 text-primary/30 rotate-12" />
+            <div className="absolute bottom-1/4 right-[15%] w-24 h-24 bg-primary/20 rounded-full" />
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <AnimatedSection className="lg:col-span-1">
@@ -281,7 +281,7 @@ export default function Home() {
   return (
     <div className="flex flex-col bg-background">
       {/* Hero Section */}
-      <section className="relative h-[90vh] min-h-[600px] w-full flex items-center justify-center text-center text-white overflow-hidden">
+      <section className="relative h-[90vh] min-h-[600px] w-full flex items-center justify-center text-center text-white">
         <Image
           src="https://picsum.photos/1920/1080"
           alt="A team of innovators collaborating"
