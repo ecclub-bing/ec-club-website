@@ -10,18 +10,43 @@ import Image from "next/image";
 
 export function Footer() {
     const [logoUrl, setLogoUrl] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchLogo = async () => {
-            const settingsDocRef = doc(db, "settings", "site");
-            const docSnap = await getDoc(settingsDocRef);
-            if (docSnap.exists() && docSnap.data().logoUrl) {
-                setLogoUrl(docSnap.data().logoUrl);
+            try {
+                const settingsDocRef = doc(db, "settings", "site");
+                const docSnap = await getDoc(settingsDocRef);
+                if (docSnap.exists() && docSnap.data().logoUrl) {
+                    setLogoUrl(docSnap.data().logoUrl);
+                }
+            } catch (error) {
+                console.error("Failed to fetch logo:", error);
+            } finally {
+                setIsLoading(false);
             }
         }
         fetchLogo();
     }, []);
 
+    const renderLogo = () => {
+        if (isLoading) {
+          return <div className="h-12 w-64" />; // Placeholder to prevent layout shift
+        }
+        if (logoUrl) {
+          return (
+            <div className="relative h-12 w-64">
+                <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
+            </div>
+          );
+        }
+        return (
+          <>
+            <Briefcase className="h-6 w-6 text-primary" />
+            <span>InnovateConnect</span>
+          </>
+        );
+      };
 
   return (
     <footer className="bg-secondary/40 border-t">
@@ -29,16 +54,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold mb-4">
-                {logoUrl ? (
-                    <div className="relative h-12 w-64">
-                        <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
-                    </div>
-                ) : (
-                    <>
-                        <Briefcase className="h-6 w-6 text-primary" />
-                        <span>InnovateConnect</span>
-                    </>
-                )}
+                {renderLogo()}
             </Link>
              <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Entrepreneur Connect. All Rights Reserved.</p>
           </div>

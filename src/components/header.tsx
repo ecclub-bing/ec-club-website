@@ -24,32 +24,49 @@ export function Header() {
   const pathname = usePathname();
   const [isSheetOpen, setSheetOpen] = useState(false);
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchLogo = async () => {
-        const settingsDocRef = doc(db, "settings", "site");
-        const docSnap = await getDoc(settingsDocRef);
-        if (docSnap.exists() && docSnap.data().logoUrl) {
-            setLogoUrl(docSnap.data().logoUrl);
+        try {
+            const settingsDocRef = doc(db, "settings", "site");
+            const docSnap = await getDoc(settingsDocRef);
+            if (docSnap.exists() && docSnap.data().logoUrl) {
+                setLogoUrl(docSnap.data().logoUrl);
+            }
+        } catch (error) {
+            console.error("Failed to fetch logo:", error);
+        } finally {
+            setIsLoading(false);
         }
     }
     fetchLogo();
   }, []);
 
+  const renderLogo = () => {
+    if (isLoading) {
+      return <div className="h-12 w-64" />; // Placeholder to prevent layout shift
+    }
+    if (logoUrl) {
+      return (
+        <div className="relative h-12 w-64">
+            <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
+        </div>
+      );
+    }
+    return (
+      <>
+        <Briefcase className="h-6 w-6 text-primary" />
+        <span>InnovateConnect</span>
+      </>
+    );
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold">
-            {logoUrl ? (
-                <div className="relative h-12 w-64">
-                    <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
-                </div>
-            ) : (
-                <>
-                    <Briefcase className="h-6 w-6 text-primary" />
-                    <span>InnovateConnect</span>
-                </>
-            )}
+            {renderLogo()}
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
@@ -83,16 +100,7 @@ export function Header() {
             <SheetContent side="right">
               <nav className="grid gap-6 text-lg font-medium mt-12">
                 <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold mb-4">
-                    {logoUrl ? (
-                        <div className="relative h-12 w-64">
-                            <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
-                        </div>
-                    ) : (
-                        <>
-                            <Briefcase className="h-6 w-6 text-primary" />
-                            <span>InnovateConnect</span>
-                        </>
-                    )}
+                    {renderLogo()}
                 </Link>
                 {navLinks.map(({ href, label }) => (
                   <Link
