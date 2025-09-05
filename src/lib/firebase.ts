@@ -18,6 +18,7 @@ let app: FirebaseApp;
 let auth: Auth;
 let db: Firestore;
 
+// Singleton initialization for Firebase
 if (getApps().length === 0) {
   app = initializeApp(firebaseConfig);
 } else {
@@ -27,10 +28,11 @@ if (getApps().length === 0) {
 auth = getAuth(app);
 db = getFirestore(app);
 
-// Function to add sample data, defined to be called once.
 const addSampleArticles = async () => {
-    const articlesCollection = collection(db, "articles");
-    const q = query(articlesCollection, limit(1));
+  const articlesCollection = collection(db, "articles");
+  const q = query(articlesCollection, limit(1));
+  
+  try {
     const articlesSnapshot = await getDocs(q);
 
     if (articlesSnapshot.empty) {
@@ -62,20 +64,20 @@ const addSampleArticles = async () => {
             },
         ];
 
-        try {
-            for (const article of sampleArticles) {
-                await addDoc(articlesCollection, article);
-                console.log(`Added sample article: ${article.title}`);
-            }
-        } catch (error) {
-            console.error("Error adding sample articles:", error);
+        for (const article of sampleArticles) {
+            await addDoc(articlesCollection, article);
+            console.log(`Added sample article: ${article.title}`);
         }
     } else {
         console.log("Articles collection is not empty, skipping sample data.");
     }
+  } catch (error) {
+    console.error("Error checking or adding sample articles:", error);
+  }
 };
 
-// Call the function to populate data if needed.
+// We will call this function inside a useEffect in a component to avoid race conditions.
 addSampleArticles();
+
 
 export { app, auth, db };

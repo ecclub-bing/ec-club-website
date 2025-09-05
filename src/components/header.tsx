@@ -7,7 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -20,13 +23,33 @@ const navLinks = [
 export function Header() {
   const pathname = usePathname();
   const [isSheetOpen, setSheetOpen] = useState(false);
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+        const settingsDocRef = doc(db, "settings", "site");
+        const docSnap = await getDoc(settingsDocRef);
+        if (docSnap.exists() && docSnap.data().logoUrl) {
+            setLogoUrl(docSnap.data().logoUrl);
+        }
+    }
+    fetchLogo();
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold">
-          <Briefcase className="h-6 w-6 text-primary" />
-          <span>InnovateConnect</span>
+            {logoUrl ? (
+                <div className="relative h-8 w-24">
+                    <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
+                </div>
+            ) : (
+                <>
+                    <Briefcase className="h-6 w-6 text-primary" />
+                    <span>InnovateConnect</span>
+                </>
+            )}
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
@@ -60,8 +83,16 @@ export function Header() {
             <SheetContent side="right">
               <nav className="grid gap-6 text-lg font-medium mt-12">
                 <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold mb-4">
-                    <Briefcase className="h-6 w-6 text-primary" />
-                    <span>InnovateConnect</span>
+                    {logoUrl ? (
+                        <div className="relative h-8 w-24">
+                            <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
+                        </div>
+                    ) : (
+                        <>
+                            <Briefcase className="h-6 w-6 text-primary" />
+                            <span>InnovateConnect</span>
+                        </>
+                    )}
                 </Link>
                 {navLinks.map(({ href, label }) => (
                   <Link

@@ -1,16 +1,44 @@
+"use client";
+
 import { Briefcase, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import Image from "next/image";
 
 export function Footer() {
+    const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchLogo = async () => {
+            const settingsDocRef = doc(db, "settings", "site");
+            const docSnap = await getDoc(settingsDocRef);
+            if (docSnap.exists() && docSnap.data().logoUrl) {
+                setLogoUrl(docSnap.data().logoUrl);
+            }
+        }
+        fetchLogo();
+    }, []);
+
+
   return (
     <footer className="bg-secondary/40 border-t">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold mb-4">
-                <Briefcase className="h-6 w-6 text-primary" />
-                <span>InnovateConnect</span>
+                {logoUrl ? (
+                    <div className="relative h-8 w-24">
+                        <Image src={logoUrl} alt="InnovateConnect Logo" fill className="object-contain" />
+                    </div>
+                ) : (
+                    <>
+                        <Briefcase className="h-6 w-6 text-primary" />
+                        <span>InnovateConnect</span>
+                    </>
+                )}
             </Link>
              <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Entrepreneur Connect. All Rights Reserved.</p>
           </div>
