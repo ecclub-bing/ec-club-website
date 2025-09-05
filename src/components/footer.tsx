@@ -4,7 +4,6 @@ import { Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import Image from "next/image";
-import logo from '@/assets/logo.png';
 
 export function Footer() {
 
@@ -14,7 +13,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <Link href="/" className="mb-4">
-                <Image src={logo} alt="Entrepreneur Connect Logo" width={220} height={55} />
+                <Image src="/logo.png" alt="Entrepreneur Connect Logo" width={220} height={55} />
             </Link>
              <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Entrepreneur Connect. All Rights Reserved.</p>
           </div>

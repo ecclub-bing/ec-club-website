@@ -9,7 +9,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import Image from "next/image";
-import logo from '@/assets/logo.png';
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -27,7 +26,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link href="/">
-          <Image src={logo} alt="Entrepreneur Connect Logo" width={220} height={55} priority />
+          <Image src="/logo.png" alt="Entrepreneur Connect Logo" width={220} height={55} priority />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
@@ -61,7 +60,7 @@ export function Header() {
             <SheetContent side="right">
               <nav className="grid gap-6 text-lg font-medium mt-12">
                 <Link href="/" className="mb-4">
-                  <Image src={logo} alt="Entrepreneur Connect Logo" width={250} height={60}/>
+                  <Image src="/logo.png" alt="Entrepreneur Connect Logo" width={250} height={60}/>
                 </Link>
                 {navLinks.map(({ href, label }) => (
                   <Link
